@@ -127,9 +127,41 @@ void ReportMessage()
     Buffer[6] = (MBcrc16(Buffer, 5)>>8)&0XFF;  
     SendMessage(Buffer,7);
   }
-  else if(0x16== USART1MemoryBuffer[5]){  
+  else if(0x10== USART1MemoryBuffer[5]){  
     Buffer[2] = 32;
-    //Buffer[1] = USART1MemoryBuffer[1];
+    Buffer[3] = TC1 >> 8;
+    Buffer[4] = TC1;
+    Buffer[5] = TC2 >> 8;
+    Buffer[6] = TC2;
+    Buffer[7] = TC3 >> 8;
+    Buffer[8] = TC3;
+    Buffer[9] = TC4 >> 8;
+    Buffer[10] = TC4;
+    Buffer[11] = TC5 >> 8;
+    Buffer[12] = TC5;
+    Buffer[13] = TC6 >> 8;
+    Buffer[14] = TC6;
+    Buffer[15] = TC7 >> 8;
+    Buffer[16] = TC7;
+    Buffer[17] = TC8 >> 8;
+    Buffer[18] = TC8;
+    Buffer[19] = TC9 >> 8;
+    Buffer[20] = TC9;
+    Buffer[21] = TC10 >> 8;
+    Buffer[22] = TC10;
+    Buffer[23] = TC11 >> 8;
+    Buffer[24] = TC11;
+    Buffer[25] = TC12 >> 8;
+    Buffer[26] = TC12;
+    Buffer[27] = TC13 >> 8;
+    Buffer[28] = TC13;
+    Buffer[29] = TC14 >> 8;
+    Buffer[30] = TC14;
+    Buffer[31] = TC15 >> 8;
+    Buffer[32] = TC15;
+    Buffer[33] = TC16 >> 8;
+    Buffer[34] = TC16;
+    
     Buffer[35] = MBcrc16(Buffer, 35)&0XFF;
     Buffer[36] = (MBcrc16(Buffer, 35)>>8)&0XFF;  
     SendMessage(Buffer,37);
@@ -152,6 +184,7 @@ int main(void)
   TIM_Cmd(TIM3, DISABLE);  
 
   while(1)  { 
+    /*
     i = max31855_temp_cel(&temperature1,&thermocouple1,1);
     i = max31855_temp_cel(&temperature2,&thermocouple2,2);
     i = max31855_temp_cel(&temperature3,&thermocouple3,3);
@@ -171,25 +204,110 @@ int main(void)
     i = max31855_temp_cel(&temperature14,&thermocouple14,14);
     i = max31855_temp_cel(&temperature15,&thermocouple15,15);
     i = max31855_temp_cel(&temperature16,&thermocouple16,16);
-    
+    */
     i = max31855_temp_int16(&ICT1,&TC1,1);
+      
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT2,&TC2,2);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT3,&TC3,3);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT4,&TC4,4);
     
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT5,&TC5,5);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
     i = max31855_temp_int16(&ICT6,&TC6,6);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
     i = max31855_temp_int16(&ICT7,&TC7,7);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT8,&TC8,8);
     
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT9,&TC9,9);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT10,&TC10,10);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT11,&TC11,11);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT12,&TC12,12);
     
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT13,&TC13,13);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT14,&TC14,14);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT15,&TC15,15);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
+    
     i = max31855_temp_int16(&ICT16,&TC16,16);
     
     if(1 == HaveReceivedNewCommand){
