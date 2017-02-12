@@ -14,7 +14,7 @@ TraceBufferSize=0x00010000
 TraceStallIfFIFOFull=0x00000000
 TracePortSize=0x00000004
 [DebugChecksum]
-Checksum=1470044558
+Checksum=442041274
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -54,8 +54,9 @@ Freq=10000000
 MultiCoreRunAll=1
 [array_types]
 Fmt0=u8[6]	4	0
-Fmt1=unsigned char[4]	4	0
-Fmt2=unsigned char[6]	4	0
+Fmt1=uint8[10]	4	0
+Fmt2=unsigned char[4]	4	0
+Fmt3=unsigned char[6]	4	0
 [watch_formats]
 Fmt0={W}42:temperature	0	9
 Fmt1={W}42:thermocouple	0	9
@@ -105,6 +106,10 @@ GraphEnabled=0
 ShowTimeLog=1
 ShowTimeSum=1
 SumSortOrder=0
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Count=0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -112,6 +117,13 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
+[Aliases]
+A0=_ "C:\workspace\sw\old\stm32-firmware\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\iar\startup_stm32f10x_md.s" ""
+A1=_ "C:\workspace\sw\old\stm32-firmware\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c" ""
+A2=_ "C:\workspace\sw\old\stm32-firmware\Project\EWARMv7\main.c" ""
+A3=_ "C:\workspace\sw\old\stm32-firmware\User\drivers\bsp_nearfield.c" ""
+Count=4
+SuppressDialog=1
 [CallStackLog]
 Enabled=0
 [PowerProbe]
@@ -124,15 +136,3 @@ Mode=1
 Graph=0
 Symbiont=0
 Exclusions=
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\main.c}.54.5" 0 0 1 "" 0 "" 0
-Count=1
-[Aliases]
-A0=_ "C:\workspace\sw\old\stm32-firmware\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\iar\startup_stm32f10x_md.s" ""
-A1=_ "C:\workspace\sw\old\stm32-firmware\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c" ""
-A2=_ "C:\workspace\sw\old\stm32-firmware\Project\EWARMv7\main.c" ""
-A3=_ "C:\workspace\sw\old\stm32-firmware\User\drivers\bsp_nearfield.c" ""
-Count=4
-SuppressDialog=1

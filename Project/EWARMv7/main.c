@@ -9,14 +9,132 @@
 #include "spi.h"
 
 /* Private typedef -----------------------------------------------------------*/
+max31855_status i;
+float thermocouple1, temperature1,thermocouple2, temperature2, thermocouple3, temperature3,thermocouple4, temperature4,thermocouple5, temperature5,thermocouple6, temperature6, thermocouple7, temperature7,thermocouple8, temperature8, thermocouple9, temperature9,thermocouple10, temperature10,thermocouple11, temperature11, thermocouple12, temperature12,thermocouple13, temperature13,thermocouple14, temperature14, thermocouple15, temperature15,thermocouple16, temperature16;
+int16_t TC1,TC2,TC3,TC4,TC5,TC6,TC7,TC8,TC9,TC10,TC11,TC12,TC13,TC14,TC15,TC16,ICT1,ICT2,ICT3,ICT4,ICT5,ICT6,ICT7,ICT8,ICT9,ICT10,ICT11,ICT12,ICT13,ICT14,ICT15,ICT16;
+static uint8 Buffer[50]={0};
 
-uint8 HaveReceivedNewCommand = 1;
-uint16 Display_coinNum = 0 ;
+/**
+* @fun    uint16 MBcrc16
+* @brief  16位CRC校验
+*         2015/12/23 星期三,Administrator
+* @param  uint8 *ptr
+* @param  int len
+*
+* @retval CRC校验值
+*/
+uint16 MBcrc16(uint8 *ptr, int len)
+{
+  uint8 i;
+  uint16 crc = 0xffff;
+  if(len == 0)
+  {
+    len = 1;
+  }
+  while(len--)
+  {
+    crc ^= *ptr;
+    for(i = 0; i < 8; i++)
+    {
+      if(crc & 1)
+      {
+        crc>>=1;
+        crc ^= 0xa001;		
+      }
+      else
+      {
+        crc >>=1;
+      }
+    }
+    ptr++;
+  }
+  return (crc);
+}
 
-DisplayRefreshLedStatuse_TypeDef RefreshLedStatuse; //定义枚举变量刷新LED的显示状态
-
-  max31855_status i;
-  float thermocouple1, temperature1,thermocouple2, temperature2, thermocouple3, temperature3,thermocouple4, temperature4,thermocouple5, temperature5,thermocouple6, temperature6, thermocouple7, temperature7,thermocouple8, temperature8, thermocouple9, temperature9,thermocouple10, temperature10,thermocouple11, temperature11, thermocouple12, temperature12,thermocouple13, temperature13,thermocouple14, temperature14, thermocouple15, temperature15,thermocouple16, temperature16;
+void ReportMessage()
+{ 
+  Buffer[0] = USART1MemoryBuffer[0];
+  Buffer[1] = USART1MemoryBuffer[1];
+  
+  if(1 == USART1MemoryBuffer[5]){
+    Buffer[2] = 2;
+    if(0 == USART1MemoryBuffer[3]){      
+      Buffer[3] = TC1 >> 8;
+      Buffer[4] = TC1;
+    }
+    if(1 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC2 >> 8;
+      Buffer[4] = TC2;
+    }  
+    if(2 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC3 >> 8;
+      Buffer[4] = TC3;
+    }
+    if(3 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC4 >> 8;
+      Buffer[4] = TC4;
+    }
+    if(4 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC5 >> 8;
+      Buffer[4] = TC5;
+    }
+    if(5 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC6 >> 8;
+      Buffer[4] = TC6;
+    }
+    if(6 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC7 >> 8;
+      Buffer[4] = TC7;
+    }
+    if(7 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC8 >> 8;
+      Buffer[4] = TC8;
+    }
+    if(8 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC9 >> 8;
+      Buffer[4] = TC9;
+    }
+    if(9 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC10 >> 8;
+      Buffer[4] = TC10;
+    }
+    if(10 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC11 >> 8;
+      Buffer[4] = TC11;
+    }
+    if(11 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC12 >> 8;
+      Buffer[4] = TC12;
+    }
+    if(12 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC13 >> 8;
+      Buffer[4] = TC13;
+    }
+    if(13 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC14 >> 8;
+      Buffer[4] = TC14;
+    }
+    if(14 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC15 >> 8;
+      Buffer[4] = TC15;
+    }
+    if(15 == USART1MemoryBuffer[3]){
+      Buffer[3] = TC16 >> 8;
+      Buffer[4] = TC16;
+    }
+    
+    Buffer[5] = MBcrc16(Buffer, 5)&0XFF;
+    Buffer[6] = (MBcrc16(Buffer, 5)>>8)&0XFF;  
+    SendMessage(Buffer,7);
+  }
+  else if(0x16== USART1MemoryBuffer[5]){  
+    Buffer[2] = 32;
+    //Buffer[1] = USART1MemoryBuffer[1];
+    Buffer[35] = MBcrc16(Buffer, 35)&0XFF;
+    Buffer[36] = (MBcrc16(Buffer, 35)>>8)&0XFF;  
+    SendMessage(Buffer,37);
+  }    
+}
 
 int main(void)
 {  
@@ -53,10 +171,30 @@ int main(void)
     i = max31855_temp_cel(&temperature14,&thermocouple14,14);
     i = max31855_temp_cel(&temperature15,&thermocouple15,15);
     i = max31855_temp_cel(&temperature16,&thermocouple16,16);
-   //i = max31855_temp_fah(&temperature,&thermocouple);
+    
+    i = max31855_temp_int16(&ICT1,&TC1,1);
+    i = max31855_temp_int16(&ICT2,&TC2,2);
+    i = max31855_temp_int16(&ICT3,&TC3,3);
+    i = max31855_temp_int16(&ICT4,&TC4,4);
+    
+    i = max31855_temp_int16(&ICT5,&TC5,5);
+    i = max31855_temp_int16(&ICT6,&TC6,6);
+    i = max31855_temp_int16(&ICT7,&TC7,7);
+    i = max31855_temp_int16(&ICT8,&TC8,8);
+    
+    i = max31855_temp_int16(&ICT9,&TC9,9);
+    i = max31855_temp_int16(&ICT10,&TC10,10);
+    i = max31855_temp_int16(&ICT11,&TC11,11);
+    i = max31855_temp_int16(&ICT12,&TC12,12);
+    
+    i = max31855_temp_int16(&ICT13,&TC13,13);
+    i = max31855_temp_int16(&ICT14,&TC14,14);
+    i = max31855_temp_int16(&ICT15,&TC15,15);
+    i = max31855_temp_int16(&ICT16,&TC16,16);
+    
+    if(1 == HaveReceivedNewCommand){
+      HaveReceivedNewCommand = 0;
+      ReportMessage();      
+    }
   }   
 }
-
-/******************* (C) COPYRIGHT 2015 WuLianGroup ********END OF FIL*********/ 
-
-

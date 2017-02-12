@@ -1,6 +1,4 @@
-
 /* Includes ------------------------------------------------------------------*/
-
 #include "stm32f10x.h"
 #include "bsp_timer.h"
 #include "main.h"
@@ -392,6 +390,3 @@ int32 bsp_GetRunTime(void)
   
   return runtime;
 }
-
-/******************* (C) COPYRIGHT 2015 WuLianGroup ********END OF FIL*********/ 
-

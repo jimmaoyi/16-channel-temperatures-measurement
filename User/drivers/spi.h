@@ -39,6 +39,7 @@ typedef uint8_t max31855_status;
  * interested in.
  */
 max31855_status max31855_temp_cel(float *t_int, float *t_tc,uint8 channal);
+max31855_status max31855_temp_int16(int16_t *temperature_int, int16_t *temperature_tc,uint8 channal);
 max31855_status max31855_temp_fah(float *t_int, float *t_tc,uint8 channal);
 max31855_status max31855_temp_kel(float *t_int, float *t_tc,uint8 channal);
 

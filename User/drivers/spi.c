@@ -365,6 +365,55 @@ max31855_status max31855_temp_cel(float *t_int, float *t_tc,uint8 channal)
   return 0;
 }
 
+max31855_status max31855_temp_int16(int16_t *temperature_int, int16_t *temperature_tc,uint8 channal)
+{
+  uint32_t raw_reading;
+  
+  raw_reading = max31855_read(channal);
+  
+  
+  /* Temperature reading from cold compensation junction. */
+  if (0 != temperature_int) {
+    
+    
+    tmp_int = MAX31855_TEMP_INT(raw_reading);
+    
+    /* Extend sign bit if need be. */
+    if (MAX31855_INT_SIGN_NEG & raw_reading) {
+      tmp_int |= 0xF000;
+    }
+    
+    *temperature_int = tmp_int;
+  }
+  
+  /* Compensated temperature from thermocouple tip. */
+  if (0 != temperature_tc) {    
+    
+    tmp_tc = MAX31855_TEMP_TC(raw_reading);
+    
+    /* Extend sign bit if need be. */
+    if (MAX31855_TC_SIGN_NEG & raw_reading) {
+      tmp_tc |= 0xC000;
+    }
+    
+    *temperature_tc = tmp_tc;
+  }
+  
+   if (raw_reading & OC_FAULT) {
+    return OC_FAULT;
+  }
+  if (raw_reading & SCG_FAULT) {
+    return  SCG_FAULT;
+  }
+  if (raw_reading & SCV_FAULT) {
+    return SCV_FAULT;
+  }
+  if (raw_reading & MAX31855_FAULT) {
+    return 0x10;
+  }
+  return 0;
+}
+
 /* Read the external and, optionally, internal temperatures from the MAX31855
 * and return them in Fahrenheit.  This is essentially a wrapper to the Celsius
 * reading call does the "9/5ths plus 32" conversion that we all learned in

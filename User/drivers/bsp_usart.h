@@ -11,19 +11,13 @@ extern "C" {
 #include "stm32f10x.h"
 #include "main.h"
 /* Exported types ------------------------------------------------------------*/
-
-/* Exported constants --------------------------------------------------------*/
-extern uint8 Count1;
-extern uint8 USART1MemoryBuffer[50];
-
+extern uint8 USART1MemoryBuffer[10];
+extern uint8 HaveReceivedNewCommand;
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 extern void bsp_InitUart(void);
-
-extern void SendNetworkCMD(uint8 CMD);
 extern void SendMessage(uint8 *Buffer1, uint8 length);
-extern void SendMessageusart2(uint8 *Buffer1, uint8 length);
   
 #ifdef __cplusplus
 }
