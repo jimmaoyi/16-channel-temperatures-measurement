@@ -10,13 +10,13 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-static uint8 Count1 = 0;
+static uint8 Count1 = 0 , serialNum = 0 ;
 static uint8 USART1ReceiveBuffer[10] = {0};
 /* Private function prototypes -----------------------------------------------*/ 
 uint8 USART1MemoryBuffer[10] = {0};
 uint8 HaveReceivedNewCommand = 0;
 /* Private functions ---------------------------------------------------------*/
-uint16 MBcrc16(uint8 *ptr, int len);
+
 void SendMessage(uint8 *Buffer, uint8 length);
 
 /*
@@ -75,7 +75,24 @@ void bsp_InitUart(void)
   */
   USART_ClearFlag(USART1, USART_FLAG_TC);
 #endif  
-
+ 
+  if(0 == GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_3))
+      serialNum += 1;
+  
+  if(0 == GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_12))
+      serialNum += 2;
+  
+  if(0 == GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_2))
+      serialNum += 4;
+  
+  if(0 == GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_1))
+      serialNum += 8;
+  
+  if(0 == GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_0))
+      serialNum += 32;
+  
+  if(0 == GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_5))
+      serialNum += 64;
 }
 
 /**
@@ -100,7 +117,8 @@ void USART1_IRQHandler(void)
     
     if(Count1 > 7)                 
     {       
-      if(USART1ReceiveBuffer[1]==0X4)
+      if((4 == USART1ReceiveBuffer[1]) && (serialNum == USART1ReceiveBuffer[2]))
+      //if(4 == USART1ReceiveBuffer[1])
       {
         memcpy(USART1MemoryBuffer,&USART1ReceiveBuffer,8);  
         memset(USART1ReceiveBuffer,0,8); 

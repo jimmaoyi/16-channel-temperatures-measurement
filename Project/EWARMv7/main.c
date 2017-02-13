@@ -9,6 +9,7 @@
 #include "spi.h"
 
 /* Private typedef -----------------------------------------------------------*/
+
 max31855_status i;
 float thermocouple1, temperature1,thermocouple2, temperature2, thermocouple3, temperature3,thermocouple4, temperature4,thermocouple5, temperature5,thermocouple6, temperature6, thermocouple7, temperature7,thermocouple8, temperature8, thermocouple9, temperature9,thermocouple10, temperature10,thermocouple11, temperature11, thermocouple12, temperature12,thermocouple13, temperature13,thermocouple14, temperature14, thermocouple15, temperature15,thermocouple16, temperature16;
 int16_t TC1,TC2,TC3,TC4,TC5,TC6,TC7,TC8,TC9,TC10,TC11,TC12,TC13,TC14,TC15,TC16,ICT1,ICT2,ICT3,ICT4,ICT5,ICT6,ICT7,ICT8,ICT9,ICT10,ICT11,ICT12,ICT13,ICT14,ICT15,ICT16;
@@ -54,7 +55,7 @@ uint16 MBcrc16(uint8 *ptr, int len)
 void ReportMessage()
 { 
   Buffer[0] = USART1MemoryBuffer[0];
-  Buffer[1] = USART1MemoryBuffer[1];
+  Buffer[1] = USART1MemoryBuffer[2];
   
   if(1 == USART1MemoryBuffer[5]){
     Buffer[2] = 2;
@@ -127,7 +128,7 @@ void ReportMessage()
     Buffer[6] = (MBcrc16(Buffer, 5)>>8)&0XFF;  
     SendMessage(Buffer,7);
   }
-  else if(0x10== USART1MemoryBuffer[5]){  
+  else if((0x10== USART1MemoryBuffer[5]) && (0 == USART1MemoryBuffer[3])){  
     Buffer[2] = 32;
     Buffer[3] = TC1 >> 8;
     Buffer[4] = TC1;
@@ -182,6 +183,8 @@ int main(void)
  
   TIM_Cmd(TIM2, DISABLE); 
   TIM_Cmd(TIM3, DISABLE);  
+  
+  
 
   while(1)  { 
     /*

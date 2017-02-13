@@ -36,28 +36,28 @@ void SPI1_Init(void)
   
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE);
   
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_10 | GPIO_Pin_13 | GPIO_Pin_2 | GPIO_Pin_9 | GPIO_Pin_0 | GPIO_Pin_1  | GPIO_Pin_3 | GPIO_Pin_5 | GPIO_Pin_7;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_10 | GPIO_Pin_13 | GPIO_Pin_9 | GPIO_Pin_5 | GPIO_Pin_7;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(GPIOC, &GPIO_InitStructure);
   
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE);
   
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_11 | GPIO_Pin_8 | GPIO_Pin_4 ; //5|2|4|10|
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_11 | GPIO_Pin_8 | GPIO_Pin_4 | GPIO_Pin_0 | GPIO_Pin_1  | GPIO_Pin_3 | GPIO_Pin_2 ; //5|2|4|10|
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING; 		 //
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		 //
   GPIO_Init(GPIOC, &GPIO_InitStructure); 
   
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
    
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_11 | GPIO_Pin_6 | GPIO_Pin_4 | GPIO_Pin_2 | GPIO_Pin_0 ;  //7|3|11|12|13|14
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_11 | GPIO_Pin_6 | GPIO_Pin_4 | GPIO_Pin_2 | GPIO_Pin_0 | GPIO_Pin_12 ;  //7|3|11|12|13|14
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(GPIOA, &GPIO_InitStructure); 
   
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
   
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_1 | GPIO_Pin_7 | GPIO_Pin_5 | GPIO_Pin_3 ;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_7 | GPIO_Pin_5 | GPIO_Pin_3 ;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(GPIOA, &GPIO_InitStructure);  
@@ -65,14 +65,14 @@ void SPI1_Init(void)
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO,ENABLE); 
   GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable , ENABLE); //½ûÖ¹JTAG¹¦ÄÜ
   
-  GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_12 | GPIO_Pin_1 |GPIO_Pin_3 | GPIO_Pin_4 |GPIO_Pin_5 |GPIO_Pin_7 |GPIO_Pin_8  |GPIO_Pin_11 | GPIO_Pin_13 | GPIO_Pin_15;;	 //IO-->PF0?¡éPF1 ???¨²????
+  GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_12 | GPIO_Pin_1 |GPIO_Pin_3 | GPIO_Pin_4 |GPIO_Pin_7 |GPIO_Pin_8  |GPIO_Pin_11 | GPIO_Pin_13 | GPIO_Pin_15;;	 //IO-->PF0?¡éPF1 ???¨²????
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //¨ª?¨ª¨¬¨º?3?
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		 //IO?¨²?¨´?¨¨?a50MHz
   GPIO_Init(GPIOB, &GPIO_InitStructure);			 //?¨´?Y¨¦¨¨?¡§2?¨ºy3?¨º??¡¥PF0?¡éPF1  
   
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO,ENABLE);  //
   
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14 | GPIO_Pin_10 | GPIO_Pin_0 | GPIO_Pin_9 | GPIO_Pin_6 ;  //6|8|9|15|16
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14 | GPIO_Pin_10 | GPIO_Pin_0 | GPIO_Pin_9 | GPIO_Pin_6 | GPIO_Pin_5;  //6|8|9|15|16
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING; 		 //
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		 //
   GPIO_Init(GPIOB, &GPIO_InitStructure);   
